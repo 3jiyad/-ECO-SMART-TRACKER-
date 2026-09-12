@@ -78,6 +78,7 @@ if st.button("🚀 ফাইনাল রিপোর্ট সাবমিট �
             st.error("⚠️ ডেটা সেভ করতে সমস্যা হয়েছে।")
 
 import streamlit as st
+import pandas as pd
 
 # Page Configuration
 st.set_page_config(page_title="ECO-SMART Tracker v4.0", layout="wide")
@@ -90,7 +91,7 @@ tab1, tab2, tab3, tab4 = st.tabs([
     "Resource Hub & Feedback"
 ])
 
-# --- TAB 1: EXACT ORIGINAL SECTION (DO NOT CHANGE) ---
+# --- TAB 1: PROJECT OVERVIEW & INSTITUTIONAL DETAILS ---
 with tab1:
     st.markdown("## OFFICIAL PROJECT REPORT")
     st.markdown("# ECO-SMART Tracker v4.0")
@@ -108,25 +109,38 @@ with tab1:
     st.success("**Main Objective**\n\n"
                "To establish a modern, live, and user-friendly digital system for environmental tracking and data collection, "
                "accessible instantly via cross-device QR code scanning without manual friction.")
+    
+    st.markdown("---")
+    st.markdown("### Institutional & Team Details")
+    st.markdown("- **Institution:** Vasha Shaheed Abdul Jabbar Ansar VDP School and College")
+    st.markdown("- **Project Type:** School project")
+    st.markdown("- **Department:** Science (9B)")
+    st.markdown("- **Academic Session:** 2025–2026")
+    st.markdown("- **Team Members (JKL):**")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
+    st.markdown("  - ________________________")
 
-# --- TAB 2: NEW CONTENT - LIVE STATISTICS ---
+# --- TAB 2: LIVE STATISTICS ---
 with tab2:
     st.header("Live Statistics & Environmental Metrics")
     st.write("Real-time data visualization and monitoring dashboard.")
     
-    # Sample metrics/charts expansion
     col1, col2, col3 = st.columns(3)
     col1.metric("Active QR Scans", "1,245", "+12%")
     col2.metric("Data Sync Rate", "99.8%", "Optimal")
     col3.metric("System Status", "Live", "Cloud Active")
 
-# --- TAB 3: NEW CONTENT - DATA HISTORY LOG ---
+# --- TAB 3: DATA HISTORY LOG ---
 with tab3:
     st.header("System Data History Log")
     st.write("Comprehensive tracking log of past records and entries.")
     
-    # Sample data table to increase content depth
-    import pandas as pd
     sample_data = pd.DataFrame({
         "Timestamp": ["2026-09-12 10:00", "2026-09-12 12:30", "2026-09-12 15:45"],
         "Location ID": ["Zone-A", "Zone-B", "Zone-C"],
@@ -135,7 +149,7 @@ with tab3:
     })
     st.dataframe(sample_data, use_container_width=True)
 
-# --- TAB 4: NEW CONTENT - RESOURCE HUB & FEEDBACK ---
+# --- TAB 4: RESOURCE HUB & FEEDBACK ---
 with tab4:
     st.header("Educational Resources & Feedback Hub")
     
@@ -149,4 +163,5 @@ with tab4:
         submitted = st.form_submit_button("Submit Feedback")
         if submitted:
             st.success("Thank you! Your feedback has been securely logged.")
+
 
