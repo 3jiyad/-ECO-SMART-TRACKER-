@@ -79,15 +79,21 @@ if st.button("🚀 ফাইনাল রিপোর্ট সাবমিট �
 
 import streamlit as st
 import pandas as pd
+import os
+from datetime import datetime
 
 # Page Configuration
-st.set_page_config(page_title="ECO-SMART Tracker v4.0", layout="wide")
+st.set_page_config(
+    page_title="ECO-SMART Tracker v4.0", 
+    page_icon="🌱", 
+    layout="wide"
+)
 
 # Navigation Tabs (Multi-Tab Architecture)
 tab1, tab2, tab3, tab4 = st.tabs([
     "1. Project Overview", 
     "Live Statistics & Analytics", 
-    "Data History Log", 
+    "Data History Log & Scores", 
     "Resource Hub & Feedback"
 ])
 
@@ -136,18 +142,45 @@ with tab2:
     col2.metric("Data Sync Rate", "99.8%", "Optimal")
     col3.metric("System Status", "Live", "Cloud Active")
 
-# --- TAB 3: DATA HISTORY LOG ---
+# --- TAB 3: DATA HISTORY LOG & SCORE TRACKING ---
 with tab3:
-    st.header("System Data History Log")
-    st.write("Comprehensive tracking log of past records and entries.")
+    st.header("System Data History Log & Score Tracking")
+    st.write("Submit new scores or records and view the complete history log.")
     
-    sample_data = pd.DataFrame({
-        "Timestamp": ["2026-09-12 10:00", "2026-09-12 12:30", "2026-09-12 15:45"],
-        "Location ID": ["Zone-A", "Zone-B", "Zone-C"],
-        "Status": ["Verified", "Pending Review", "Verified"],
-        "Operator": ["Admin-01", "Admin-02", "Admin-01"]
-    })
-    st.dataframe(sample_data, use_container_width=True)
+    # Score Submission Form
+    with st.form("score_entry_form", clear_on_submit=True):
+        st.subheader("➕ Add New Score / Record")
+        participant_name = st.text_input("Name / Team ID")
+        score_value = st.number_input("Score / Value", min_value=0, step=1)
+        category = st.selectbox("Category / Zone", ["Zone-A", "Zone-B", "Zone-C", "General"])
+        score_submitted = st.form_submit_button("Save Score")
+        
+        if score_submitted:
+            if participant_name:
+                score_file = "scores_data.csv"
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                new_score_df = pd.DataFrame([[current_time, participant_name, score_value, category]], 
+                                            columns=["Timestamp", "Participant Name", "Score", "Category"])
+                
+                if os.path.exists(score_file):
+                    new_score_df.to_csv(score_file, mode='a', header=False, index=False)
+                else:
+                    new_score_df.to_csv(score_file, mode='w', header=True, index=False)
+                st.success("Score successfully saved!")
+            else:
+                st.warning("Please enter a name or ID.")
+    
+    st.markdown("---")
+    st.subheader("📊 All Recorded Scores & History")
+    score_file = "scores_data.csv"
+    if os.path.exists(score_file):
+        df_scores = pd.read_csv(score_file)
+        if not df_scores.empty:
+            st.dataframe(df_scores, use_container_width=True)
+        else:
+            st.info("No score entries found yet.")
+    else:
+        st.info("No score file created yet. Add a score above to start tracking.")
 
 # --- TAB 4: RESOURCE HUB & FEEDBACK ---
 with tab4:
@@ -156,12 +189,40 @@ with tab4:
     with st.expander("📘 Read Guidelines & Documentation"):
         st.write("This section contains official documentation, sustainability guides, and paperless workflow protocols supporting the Smart Bangladesh initiative.")
         
-    with st.form("feedback_form"):
+    st.markdown("---")
+    
+    # Feedback Form
+    with st.form("feedback_form", clear_on_submit=True):
         st.subheader("Submit System Feedback")
-        user_name = st.text_input("Your Name / ID")
-        feedback_text = st.text_input("Feedback or Observation")
+        user_name = st.text_input("Your Name / ID", key="fb_name")
+        feedback_text = st.text_area("Feedback or Observation", key="fb_text")
         submitted = st.form_submit_button("Submit Feedback")
+        
         if submitted:
-            st.success("Thank you! Your feedback has been securely logged.")
+            if user_name and feedback_text:
+                feedback_file = "feedback_data.csv"
+                current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                new_data = pd.DataFrame([[current_time, user_name, feedback_text]], 
+                                        columns=["Timestamp", "User Name", "Feedback"])
+                
+                if os.path.exists(feedback_file):
+                    new_data.to_csv(feedback_file, mode='a', header=False, index=False)
+                else:
+                    new_data.to_csv(feedback_file, mode='w', header=True, index=False)
+                
+                st.success("Thank you! Your feedback has been securely logged.")
+            else:
+                st.warning("Please fill in both fields before submitting.")
 
-
+    st.markdown("---")
+    st.subheader("📥 View All Submitted Feedbacks")
+    
+    feedback_file = "feedback_data.csv"
+    if os.path.exists(feedback_file):
+        df_feedbacks = pd.read_csv(feedback_file)
+        if not df_feedbacks.empty:
+            st.dataframe(df_feedbacks, use_container_width=True)
+        else:
+            st.info("No feedback entries found yet.")
+    else:
+        st.info("No feedback file created yet. Submit a feedback above to create one.")
