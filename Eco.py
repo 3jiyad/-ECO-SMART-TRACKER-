@@ -77,12 +77,13 @@ if st.button("🚀 ফাইনাল রিপোর্ট সাবমিট �
         except Exception as e:
             st.error("⚠️ ডেটা সেভ করতে সমস্যা হয়েছে।")
 
-   import streamlit as st
+           
+import streamlit as st
 import pandas as pd
 import os
 from datetime import datetime
 
-# Page Configuration
+# --- PAGE CONFIGURATION ---
 st.set_page_config(
     page_title="ECO-SMART Tracker v4.0", 
     page_icon="🌱", 
@@ -102,10 +103,10 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("📌 *Department: Science (9B)*")
 
-# Navigation Tabs (Multi-Tab Architecture)
+# --- NAVIGATION TABS (MULTI-TAB ARCHITECTURE) ---
 tab1, tab2, tab3, tab4 = st.tabs([
     "1. Project Overview", 
-    "Live Statistics & Analytics", 
+    "2. Live Statistics & Analytics", 
     "3. Data History Log & Scores", 
     "4. Resource Hub & Feedback"
 ])
@@ -135,7 +136,7 @@ with tab1:
     st.markdown("- **Project Type:** School project")
     st.markdown("- **Department:** Science (9B)")
     st.markdown("- **Academic Session:** 2025–2026")
-    st.markdown("- **Team Members (JKL):**")
+    st.markdown("- **Team Members:**")
     st.markdown("  * Ekhtear Uddin Mohammad Jiyad (Main Developer)")
     st.markdown("  * Mahmudul Hasan")
     st.markdown("  * Al Razi")
@@ -254,4 +255,3 @@ st.markdown(
     "</p>", 
     unsafe_allow_html=True
 )
- 
