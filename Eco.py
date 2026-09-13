@@ -1,6 +1,14 @@
 import streamlit as st
 import random
 from datetime import datetime
+with tab1:
+    st.markdown("## OFFICIAL PROJECT REPORT")
+    st.markdown("# ECO-SMART Tracker v4.0")
+    
+    # এখানে ২ নম্বর ছবি বা ব্যানার দিন
+    st.image("https://img.icons8.com/color/480/earth-planet.png", width=200)
+    
+    st.markdown("### An Advanced Interactive Web Application...")
 
 # পেজ কনফিগারেশন
 st.set_page_config(page_title="Eco-Smart Tracker v4.0", page_icon="🌿", layout="centered")
