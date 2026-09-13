@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import os
 from datetime import datetime
-from google import genai
 
 # --- 1. PAGE CONFIGURATION ---
 st.set_page_config(
@@ -33,10 +32,10 @@ with st.sidebar:
     st.markdown("📌 *Department: Science (9B)*")
 
 # ==========================================
-# --- 4. DIRECT SECTION: ECO ASSESSMENT  (ব্যানারের ঠিক পরেই, কোনো ট্যাবে নয়) ---
+# --- 4. DIRECT SECTION: ECO ASSESSMENT QUIZ (ব্যানারের ঠিক পরেই) ---
 # ==========================================
 st.markdown("<h2 style='color: #2E8B57;'>❓ পরিবেশগত অভ্যাসের মূল্যায়ন মডিউল</h2>", unsafe_allow_html=True)
-st.write("আপনার দৈনন্দিন অভ্যাস যাচাই করুন এবং ইকো-স্কোর ও এআই (Gemini AI) পরামর্শ জেনে নিন।")
+st.write("আপনার দৈনন্দিন অভ্যাস যাচাই করুন এবং ইকো-স্কোর জেনে নিন।")
 
 st.subheader("📝 আপনার তথ্য প্রদান করুন:")
 col1, col2 = st.columns(2)
@@ -84,33 +83,9 @@ if st.button("🚀 ফাইনাল রিপোর্ট সাবমিট �
             st.markdown("⚡ **স্ট্যাটাস: HIGH EMISSION WARNING! 🚨**")
             st.warning("💡 মার্গারেট মিডিের বাণী: \"কয়েকজন সচেতন নাগরিক বিশ্বকে বদলে দিতে পারে—প্রকৃতপক্ষে সবসময় তাইই ঘটে এসেছে।\"")
 
-        # --- GEMINI AI INTEGRATION ---
-        st.markdown("---")
-        st.markdown("### 🤖 এআই ইকো-অ্যাসিস্ট্যান্টের পার্সোনালাইজড পরামর্শ:")
-        
-        try:
-            # Streamlit secrets থেকে এপিআই কি নেওয়া হবে
-            api_key = st.secrets.get("GEMINI_API_KEY", "")
-            if api_key:
-                client = genai.Client(api_key=api_key)
-                prompt = f"আমার নাম {user_name}। আমার ইকো-স্কোর {score}/120। পরিবেশ রক্ষা, কার্বন ফুটপ্রিন্ট কমানো এবং আমার পরিবেশবান্ধব অভ্যাস আরও উন্নত করার জন্য বাংলায় ৩টি জরুরি ও কার্যকরী পরামর্শ দিন।"
-                
-                with st.spinner("এআই পরামর্শ তৈরি করছে..."):
-                    response = client.models.generate_content(
-                        model="gemini-2.5-flash",
-                        contents=prompt,
-                    )
-                    st.success(response.text)
-            else:
-                st.info("💡 এআই পরামর্শ দেখতে আপনার `.streamlit/secrets.toml` ফাইলে `GEMINI_API_KEY` সেটআপ করুন। (নতুবা সাধারণ টিপস: নিয়মিত গাছ লাগান এবং পলিথিন বর্জন করুন!)")
-        except Exception as e:
-            st.info("💡 পরিবেশ রক্ষায় আপনার দৈনিক অভ্যাসে প্লাস্টিক ব্যবহার সম্পূর্ণ বর্জন করুন এবং বিদ্যুৎ ও পানি অপচয় রোধ করুন।")
-
-        # এসডিজি ১৩ বার্তা
         st.markdown("---")
         st.markdown("🌐 **[SDG 13 - Climate Action লক্ষ্য]:** *\"জলবায়ু পরিবর্তন ও এর প্রভাব মোকাবিলায় জরুরি পদক্ষেপ গ্রহণ করা\"—এই মূল মন্ত্রে উজ্জীবিত হয়ে আমাদের পরিবেশবান্ধব অভ্যাস গড়ে তুলতে হবে।*")
 
-        # ফাইলে ডেটা সেভ করা
         submit_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         table_data = f"Name: {user_name} | Class: {user_class} | Section: {user_section} | Roll: {user_roll} | SID: {user_sid} | Eco-Score: {score}/120 | Date: {submit_date}\n"
 
