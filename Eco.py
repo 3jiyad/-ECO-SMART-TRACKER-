@@ -77,7 +77,7 @@ if st.button("🚀 ফাইনাল রিপোর্ট সাবমিট �
         except Exception as e:
             st.error("⚠️ ডেটা সেভ করতে সমস্যা হয়েছে।")
 
-import streamlit as st
+   import streamlit as st
 import pandas as pd
 import os
 from datetime import datetime
@@ -89,12 +89,25 @@ st.set_page_config(
     layout="wide"
 )
 
+# --- GLOBAL SIDEBAR: OFFICIAL COPYRIGHT & INFO ---
+with st.sidebar:
+    st.image("https://img.icons8.com/color/96/environmental-care.png", width=80)
+    st.markdown("### ECO-SMART Tracker v4.0")
+    st.markdown("**Official System Dashboard**")
+    st.markdown("---")
+    st.markdown("🔒 **Official Copyright Notice**")
+    st.markdown("© **2025–2026 Team JKL**")
+    st.markdown("Vasha Shaheed Abdul Jabbar Ansar VDP School and College.")
+    st.markdown("All rights reserved. Unauthorized reproduction, distribution, or commercial use of this system is strictly prohibited.")
+    st.markdown("---")
+    st.markdown("📌 *Department: Science (9B)*")
+
 # Navigation Tabs (Multi-Tab Architecture)
 tab1, tab2, tab3, tab4 = st.tabs([
     "1. Project Overview", 
     "Live Statistics & Analytics", 
-    "Data History Log & Scores", 
-    "Resource Hub & Feedback"
+    "3. Data History Log & Scores", 
+    "4. Resource Hub & Feedback"
 ])
 
 # --- TAB 1: PROJECT OVERVIEW & INSTITUTIONAL DETAILS ---
@@ -123,14 +136,15 @@ with tab1:
     st.markdown("- **Department:** Science (9B)")
     st.markdown("- **Academic Session:** 2025–2026")
     st.markdown("- **Team Members (JKL):**")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
-    st.markdown("  - ________________________")
+    st.markdown("  * Ekhtear Uddin Mohammad Jiyad (Main Developer)")
+    st.markdown("  * Mahmudul Hasan")
+    st.markdown("  * Al Razi")
+    st.markdown("  * Jakaria Islam")
+    st.markdown("  * Ahmed Santo")
+    st.markdown("  * Junayed Ahmed")
+    st.markdown("  * Morsalin")
+    st.markdown("  * Mehrab Mostofa Noor")
+    st.markdown("  * Ahmed Saim")
 
 # --- TAB 2: LIVE STATISTICS ---
 with tab2:
@@ -150,6 +164,8 @@ with tab3:
     # Score Submission Form
     with st.form("score_entry_form", clear_on_submit=True):
         st.subheader("➕ Add New Score / Record")
+        st.caption("ℹ️ আপনি চাইলে একাধিকবার স্কোর সাবমিট করতে পারবেন। প্রথমবার সাবমিট করার পর এটি সাথে সাথে সেভ হয়ে যাবে।")
+        
         participant_name = st.text_input("Name / Team ID")
         score_value = st.number_input("Score / Value", min_value=0, step=1)
         category = st.selectbox("Category / Zone", ["Zone-A", "Zone-B", "Zone-C", "General"])
@@ -166,7 +182,8 @@ with tab3:
                     new_score_df.to_csv(score_file, mode='a', header=False, index=False)
                 else:
                     new_score_df.to_csv(score_file, mode='w', header=True, index=False)
-                st.success("Score successfully saved!")
+                
+                st.success("✅ আপনার প্রথম সাবমিশন সফল হয়েছে! এবার আপনি ৩ নম্বর ট্যাবে গিয়ে আপনার স্কোর দেখে নিন এবং চাইলে আরেকটি সাবমিট করুন।")
             else:
                 st.warning("Please enter a name or ID.")
     
@@ -194,6 +211,8 @@ with tab4:
     # Feedback Form
     with st.form("feedback_form", clear_on_submit=True):
         st.subheader("Submit System Feedback")
+        st.caption("ℹ️ আপনি চাইলে একাধিকবার ফিডব্যাক সাবমিট করতে পারবেন।")
+        
         user_name = st.text_input("Your Name / ID", key="fb_name")
         feedback_text = st.text_area("Feedback or Observation", key="fb_text")
         submitted = st.form_submit_button("Submit Feedback")
@@ -210,7 +229,7 @@ with tab4:
                 else:
                     new_data.to_csv(feedback_file, mode='w', header=True, index=False)
                 
-                st.success("Thank you! Your feedback has been securely logged.")
+                st.success("✅ আপনার প্রথম ফিডব্যাক সফল হয়েছে! এবার আপনি ৪ নম্বর ট্যাবের নিচের টেবিল থেকে তা দেখে নিন এবং চাইলে আরেকটি ফিডব্যাক জমা দিন।")
             else:
                 st.warning("Please fill in both fields before submitting.")
 
@@ -226,3 +245,13 @@ with tab4:
             st.info("No feedback entries found yet.")
     else:
         st.info("No feedback file created yet. Submit a feedback above to create one.")
+
+# --- GLOBAL APP FOOTER ---
+st.markdown("---")
+st.markdown(
+    "<p style='text-align: center; color: gray; font-size: 14px;'>"
+    "© 2025–2026 <b>Team JKL</b> (Science 9B) • Vasha Shaheed Abdul Jabbar Ansar VDP School and College. All Rights Reserved."
+    "</p>", 
+    unsafe_allow_html=True
+)
+ 
